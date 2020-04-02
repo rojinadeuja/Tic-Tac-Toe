@@ -17,13 +17,17 @@ class Board extends React.Component{
         super(props);
         this.state = { 
             squares: Array(9).fill(null),
+            xIsNext: true, //First move is X by default
         }; //Use parent component Board to keep states of the child Square --Lifting a state
     }
     //Function to handle the click on the Square
     handleClick(i){
         const squares = this.state.squares.slice(); //slice() creates a copy of the sqaures array to modify instead of original
-        squares[i] = 'X';
-        this.setState({squares: squares});
+        squares[i] = this.state.xIsNext ?  'X' : 'O'; //Check turns
+        this.setState({
+            squares: squares,
+            xIsNext: !this.state.xIsNext, //Everytime a player clicks flip state of xIsNext
+        });
     }
     renderSquare(i){
         return <Square 
